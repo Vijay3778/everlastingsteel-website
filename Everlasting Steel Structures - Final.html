@@ -1,0 +1,2321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Everlasting Steel Structures | Structural Steel Detailing & Connection Engineering</title>
+  <meta name="description" content="Precision-driven structural steel detailing, connection engineering, Tekla 3D modeling, and estimation support for fabricators and EPC contractors." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS — brochure blue palette
+    ═══════════════════════════════════════════ */
+    :root {
+      /* Blues from brochure */
+      --navy: #082748;
+      /* darkest — hero bg tint */
+      --blue: #0c3f88;
+      /* primary brand blue */
+      --blue-mid: #105fb8;
+      /* hover / gradient end */
+      --sky: #10c7ee;
+      /* accent cyan */
+      --sky-faint: rgba(16, 199, 238, 0.12);
+      /* Neutrals */
+      --ink: #0a0e14;
+      --steel-dk: #12191f;
+      --steel: #1c2632;
+      --steel-md: #263040;
+      --fog: #7a8fa8;
+      --silver: #b0c0d4;
+      --chrome: #d8e4f0;
+      --white: #f4f8fc;
+      /* Surfaces */
+      --glass: rgba(8, 39, 72, 0.62);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-2: rgba(255, 255, 255, 0.14);
+      /* Typography */
+      --head: 'Oswald', sans-serif;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --mono: 'JetBrains Mono', monospace;
+      --max: 1280px;
+      --r: 0px;
+      /* sharp corners — industrial */
+    }
+
+    /* ═══ RESET ═══ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--serif);
+      font-size: 17px;
+      background: var(--ink);
+      color: #e0e6ed;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ═══ LAYOUT ═══ */
+    .container {
+      width: min(calc(100% - 48px), var(--max));
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section {
+      padding: 108px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-sm {
+      padding: 64px 0;
+    }
+
+    /* ═══ TYPOGRAPHY ═══ */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-family: var(--head);
+      font-weight: 700;
+      line-height: 1.0;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      font-size: clamp(56px, 9vw, 124px);
+      font-weight: 600;
+    }
+
+    h2 {
+      font-size: clamp(38px, 5.5vw, 76px);
+    }
+
+    h3 {
+      font-size: clamp(24px, 3vw, 40px);
+    }
+
+    h4 {
+      font-size: clamp(17px, 2vw, 24px);
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--sky);
+      flex-shrink: 0;
+    }
+
+    p.lead {
+      font-size: 20px;
+      line-height: 1.75;
+      color: #c8d8e8;
+    }
+
+    p {
+      color: #9fb3c8;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    /* ═══ BUTTONS — deep blue ═══ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--head);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      height: 54px;
+      padding: 0 32px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      border: 1px solid var(--blue-mid);
+    }
+
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--blue-mid), var(--sky));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .btn-primary:hover::after {
+      opacity: 1;
+    }
+
+    .btn-primary span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(12, 63, 136, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--chrome);
+      border: 1px solid var(--line-2);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--sky);
+      color: var(--sky);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* ═══ DECORATIVE ELEMENTS ═══ */
+    .v-rule {
+      width: 1px;
+      background: var(--line-2);
+    }
+
+    .h-rule {
+      height: 1px;
+      background: var(--line-2);
+    }
+
+    /* Cross-hair / structural corner ornament */
+    .corner-mark {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+    }
+
+    .corner-mark::before,
+    .corner-mark::after {
+      content: "";
+      position: absolute;
+      background: var(--sky);
+    }
+
+    .corner-mark.tl {
+      top: 0;
+      left: 0;
+    }
+
+    .corner-mark.tl::before {
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 100%;
+    }
+
+    .corner-mark.tl::after {
+      top: 0;
+      left: 0;
+      height: 1px;
+      width: 100%;
+    }
+
+    .corner-mark.br {
+      bottom: 0;
+      right: 0;
+    }
+
+    .corner-mark.br::before {
+      bottom: 0;
+      right: 0;
+      width: 1px;
+      height: 100%;
+    }
+
+    .corner-mark.br::after {
+      bottom: 0;
+      right: 0;
+      height: 1px;
+      width: 100%;
+    }
+
+    /* ═══ STEEL TEXTURE LAYER ═══ */
+    .tex {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        repeating-linear-gradient(0deg,
+          transparent,
+          transparent 3px,
+          rgba(255, 255, 255, 0.009) 3px,
+          rgba(255, 255, 255, 0.009) 4px);
+    }
+
+    /* ═══════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════ */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(210, 224, 238, 0.97);
+      backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid rgba(12, 63, 136, 0.2);
+      transition: background 0.3s;
+    }
+
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 78px;
+      gap: 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      height: 100px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+      /* multiply knocks out black bg on light header */
+      mix-blend-mode: multiply;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+
+    @media (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi) {
+      .brand-logo {
+        image-rendering: auto;
+      }
+    }
+
+    .brand-text strong {
+      display: block;
+      font-family: var(--head);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .brand-text span {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--blue);
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--head);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--navy);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--blue-mid);
+    }
+
+    .nav-certs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .cert-pip {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 4px 11px;
+      border: 1px solid rgba(8, 39, 72, 0.45);
+      color: var(--navy);
+      background: rgba(8, 39, 72, 0.08);
+      letter-spacing: 0.1em;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════
+       HERO — full-bleed image, ops feel
+    ═══════════════════════════════════════ */
+    .hero {
+      min-height: 100svh;
+      padding-top: 78px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Full-bleed background image — steel structure operations */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: url('https://images.unsplash.com/photo-1565715101891-84427b4c0af8?w=1800&q=85&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 40%;
+    }
+
+    .hero-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(105deg, rgba(8, 20, 36, 0.97) 0%, rgba(8, 39, 72, 0.82) 42%, rgba(8, 39, 72, 0.35) 70%, transparent 100%),
+        linear-gradient(0deg, rgba(8, 15, 22, 0.85) 0%, transparent 45%);
+    }
+
+    /* Structural grid overlay */
+    .hero-grid-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(16, 199, 238, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 199, 238, 0.04) 1px, transparent 1px);
+      background-size: 88px 88px;
+      mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.5) 40%, transparent 100%);
+    }
+
+    .hero-inner {
+      flex: 1;
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 0;
+      align-items: center;
+      padding: 72px 0 100px;
+    }
+
+    .hero-left {
+      padding-right: 56px;
+    }
+
+    .hero-eyebrow {
+      margin-bottom: 28px;
+    }
+
+    .hero-h1 {
+      color: var(--white);
+      margin-bottom: 24px;
+      line-height: 0.95;
+    }
+
+    .hero-h1 .accent {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--sky);
+      display: block;
+    }
+
+    .hero-body {
+      font-family: var(--serif);
+      font-size: 19px;
+      color: #c8d8e8;
+      line-height: 1.75;
+      max-width: 54ch;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    /* Stat bar */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line-2);
+      padding-top: 32px;
+      margin-top: 44px;
+    }
+
+    .hstat {
+      padding: 0 28px 0 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .hstat:last-child {
+      border-right: none;
+      padding-left: 28px;
+      padding-right: 0;
+    }
+
+    .hstat:not(:first-child) {
+      padding-left: 28px;
+    }
+
+    .hstat-val {
+      font-family: var(--head);
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .hstat-val sup {
+      font-size: 22px;
+      color: var(--sky);
+      vertical-align: top;
+      margin-top: 4px;
+      display: inline-block;
+    }
+
+    .hstat-lbl {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fog);
+      letter-spacing: 0.15em;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    /* Hero right panel */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .info-panel {
+      background: var(--glass);
+      border: 1px solid var(--line-2);
+      border-left: 3px solid var(--sky);
+      padding: 26px 30px;
+      backdrop-filter: blur(14px);
+      position: relative;
+    }
+
+    .panel-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--sky);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(16, 199, 238, 0.2);
+    }
+
+    .spec-table {
+      display: grid;
+      gap: 0;
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    .spec-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .sk {
+      color: #9fb3c8;
+      font-family: var(--serif);
+      font-weight: 300;
+    }
+
+    .sv {
+      font-family: var(--head);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--chrome);
+      letter-spacing: 0.06em;
+    }
+
+    .cert-grid {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cert-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 5px 13px;
+      border: 1px solid var(--line-2);
+      color: var(--chrome);
+      background: rgba(12, 63, 136, 0.25);
+      letter-spacing: 0.1em;
+    }
+
+    .cert-tag.hi {
+      border-color: var(--sky);
+      color: var(--sky);
+      background: rgba(16, 199, 238, 0.08);
+    }
+
+    .contact-pip {
+      background: rgba(12, 63, 136, 0.4);
+      border: 1px solid rgba(12, 63, 136, 0.6);
+      border-left: 3px solid var(--blue-mid);
+      padding: 20px 26px;
+    }
+
+    .phone-num {
+      font-family: var(--head);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .phone-sub {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fog);
+      letter-spacing: 0.14em;
+    }
+
+    /* ═══════════════════════════════════════
+       TRUST STRIP
+    ═══════════════════════════════════════ */
+    .trust-strip {
+      background: var(--blue);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px 0;
+      position: relative;
+      z-index: 3;
+    }
+
+    .trust-items {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+    }
+
+    .ti {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 20px;
+      font-family: var(--head);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .ti-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--sky);
+      flex-shrink: 0;
+    }
+
+    .ti+.ti {
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* ═══════════════════════════════════════
+       ABOUT — image + copy
+    ═══════════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-img-wrap {
+      position: relative;
+      height: 580px;
+    }
+
+    .about-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85) saturate(0.9);
+    }
+
+    /* Floating stat card over image */
+    .img-stat {
+      position: absolute;
+      bottom: 32px;
+      right: -32px;
+      background: var(--blue);
+      border: 1px solid var(--blue-mid);
+      padding: 22px 28px;
+      min-width: 200px;
+    }
+
+    .img-stat-val {
+      font-family: var(--head);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .img-stat-lbl {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--sky);
+      letter-spacing: 0.15em;
+      margin-top: 6px;
+    }
+
+    /* Top-left accent tag */
+    .img-tag {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: rgba(8, 39, 72, 0.88);
+      border: 1px solid rgba(16, 199, 238, 0.3);
+      backdrop-filter: blur(8px);
+      padding: 10px 18px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--sky);
+      letter-spacing: 0.18em;
+    }
+
+    .about-copy .eyebrow {
+      margin-bottom: 20px;
+    }
+
+    .about-copy h2 {
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .about-copy .lead {
+      margin-bottom: 24px;
+    }
+
+    .about-copy p {
+      margin-bottom: 16px;
+    }
+
+    .pillar-list {
+      margin-top: 32px;
+      display: grid;
+      gap: 0;
+    }
+
+    .pillar {
+      padding: 20px 0;
+      border-top: 1px solid var(--line-2);
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .pillar:last-child {
+      border-bottom: 1px solid var(--line-2);
+    }
+
+    .pillar-label {
+      font-family: var(--head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sky);
+      padding-top: 2px;
+    }
+
+    .pillar p {
+      color: #c0cfde;
+      font-size: 15px;
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       SERVICES — editorial grid
+    ═══════════════════════════════════════ */
+    .services-section {
+      background: var(--steel-dk);
+    }
+
+    .svc-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 64px;
+    }
+
+    .svc-header h2 {
+      color: var(--white);
+    }
+
+    .svc-header p {
+      font-size: 17px;
+    }
+
+    .svc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .svc-card {
+      background: var(--steel);
+      padding: 44px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .svc-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--sky));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .svc-card:hover {
+      background: var(--steel-md);
+    }
+
+    .svc-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* Large watermark number */
+    .svc-num-bg {
+      position: absolute;
+      top: -10px;
+      right: 24px;
+      font-family: var(--head);
+      font-size: 140px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.025);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .svc-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--sky);
+      letter-spacing: 0.18em;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .svc-card h3 {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .svc-card>p {
+      font-size: 16px;
+      margin-bottom: 28px;
+      color: #9fb3c8;
+    }
+
+    .svc-list {
+      list-style: none;
+      display: grid;
+      gap: 9px;
+    }
+
+    .svc-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      font-family: var(--serif);
+      font-size: 15px;
+      color: #c0cfde;
+    }
+
+    .svc-list li::before {
+      content: "";
+      width: 16px;
+      height: 1px;
+      background: var(--sky);
+      flex-shrink: 0;
+      margin-top: 9px;
+    }
+
+    /* Featured service — full-width with image */
+    .svc-featured {
+      grid-column: 1/-1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .svc-featured-img {
+      position: relative;
+      min-height: 360px;
+    }
+
+    .svc-featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.7) saturate(0.8);
+    }
+
+    .svc-featured-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(28, 38, 50, 0.4));
+    }
+
+    .svc-featured .svc-card {
+      grid-column: unset;
+    }
+
+    /* ═══════════════════════════════════════
+       QUALITY PROCESS — dark, dramatic
+    ═══════════════════════════════════════ */
+    .quality-section {
+      background: linear-gradient(180deg, var(--navy) 0%, var(--steel-dk) 100%);
+      position: relative;
+    }
+
+    .quality-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=70&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.07;
+    }
+
+    .quality-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .quality-intro .eyebrow {
+      margin-bottom: 20px;
+    }
+
+    .quality-intro h2 {
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .quality-intro p {
+      margin-bottom: 18px;
+      font-size: 16px;
+    }
+
+    .differentiators {
+      margin-top: 40px;
+      display: grid;
+      gap: 0;
+    }
+
+    .diff {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .diff:first-child {
+      padding-top: 0;
+    }
+
+    .diff-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--sky);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .diff strong {
+      display: block;
+      font-family: var(--head);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 5px;
+    }
+
+    .diff p {
+      font-size: 15px;
+      margin: 0;
+      color: #9fb3c8;
+    }
+
+    /* Process steps */
+    .steps {
+      display: grid;
+      gap: 3px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      background: rgba(28, 38, 50, 0.6);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(4px);
+      transition: background 0.25s, border-color 0.25s;
+      overflow: hidden;
+    }
+
+    .step:hover {
+      background: rgba(12, 63, 136, 0.2);
+      border-color: rgba(16, 199, 238, 0.2);
+    }
+
+    .step-n {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(12, 63, 136, 0.3);
+      border-right: 1px solid var(--line);
+      font-family: var(--head);
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--sky);
+      transition: background 0.25s;
+    }
+
+    .step:hover .step-n {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .step-body {
+      padding: 22px 26px;
+    }
+
+    .step-body h4 {
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .step-body p {
+      font-size: 15px;
+      margin: 0;
+      color: #9fb3c8;
+    }
+
+    .step.final {
+      border-color: rgba(12, 63, 136, 0.5);
+    }
+
+    .step.final .step-n {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    /* ═══════════════════════════════════════
+       INDUSTRIES — image mosaic grid
+    ═══════════════════════════════════════ */
+    .industries-section {
+      background: var(--steel-dk);
+    }
+
+    .ind-header {
+      margin-bottom: 56px;
+    }
+
+    .ind-header h2 {
+      color: var(--white);
+      margin: 16px 0;
+    }
+
+    .ind-mosaic {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 280px 280px;
+      gap: 3px;
+    }
+
+    /* Featured top-left card spans 2 rows */
+    .ind-card {
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .ind-card.featured {
+      grid-row: 1/3;
+    }
+
+    .ind-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.4s ease;
+      filter: brightness(0.55) saturate(0.75);
+    }
+
+    .ind-card:hover .ind-img {
+      transform: scale(1.04);
+      filter: brightness(0.65) saturate(0.9);
+    }
+
+    /* Blue overlay on hover */
+    .ind-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(8, 39, 72, 0.88) 0%, transparent 55%);
+      transition: opacity 0.3s;
+    }
+
+    .ind-card:hover::after {
+      background: linear-gradient(0deg, rgba(12, 63, 136, 0.85) 0%, rgba(12, 63, 136, 0.2) 100%);
+    }
+
+    .ind-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 28px;
+      z-index: 2;
+    }
+
+    .ind-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--sky);
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .ind-name {
+      font-family: var(--head);
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .ind-card.featured .ind-name {
+      font-size: clamp(28px, 3.5vw, 42px);
+    }
+
+    .ind-desc {
+      font-family: var(--serif);
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-top: 8px;
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, margin-top 0.3s;
+    }
+
+    .ind-card:hover .ind-desc {
+      max-height: 80px;
+    }
+
+    /* Standards strip */
+    .std-strip {
+      margin-top: 40px;
+      border: 1px solid var(--line-2);
+      border-left: 4px solid var(--blue);
+      padding: 28px 36px;
+      background: var(--steel);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .std-strip-label {
+      font-family: var(--head);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    .std-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .std-chip {
+      font-family: var(--head);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border: 1px solid rgba(16, 199, 238, 0.25);
+      color: var(--chrome);
+      background: rgba(12, 63, 136, 0.2);
+      transition: all 0.2s;
+    }
+
+    .std-chip:hover {
+      border-color: var(--sky);
+      color: var(--sky);
+      background: rgba(16, 199, 238, 0.08);
+    }
+
+    /* ═══════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════ */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .faq-card {
+      background: var(--steel);
+      padding: 38px 42px;
+      position: relative;
+      transition: background 0.25s;
+    }
+
+    .faq-card:hover {
+      background: var(--steel-md);
+    }
+
+    .faq-card .eyebrow {
+      margin-bottom: 14px;
+    }
+
+    .faq-card h4 {
+      color: var(--white);
+      margin-bottom: 14px;
+      font-size: 20px;
+    }
+
+    .faq-card p {
+      font-size: 16px;
+      color: #9fb3c8;
+    }
+
+    /* ═══════════════════════════════════════
+       CTA BAND
+    ═══════════════════════════════════════ */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+      background: var(--navy);
+    }
+
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=70&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.3) saturate(0.6);
+    }
+
+    .cta-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(8, 39, 72, 0.95), rgba(12, 63, 136, 0.7));
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+      padding: 72px 0;
+    }
+
+    .cta-inner .eyebrow {
+      margin-bottom: 18px;
+    }
+
+    .cta-inner h2 {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .cta-inner p {
+      font-size: 18px;
+      color: var(--silver);
+      max-width: 58ch;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+      min-width: 220px;
+    }
+
+    /* ═══════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════ */
+    .contact-section {
+      background: var(--steel-dk);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+    }
+
+    .contact-info .eyebrow {
+      margin-bottom: 18px;
+    }
+
+    .contact-info h2 {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .contact-info .lead {
+      margin-bottom: 32px;
+    }
+
+    .c-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .c-row {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .c-row:last-child {
+      border-bottom: none;
+    }
+
+    .c-lbl {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--sky);
+      letter-spacing: 0.18em;
+      min-width: 80px;
+      flex-shrink: 0;
+    }
+
+    .c-val {
+      font-family: var(--head);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--chrome);
+      letter-spacing: 0.04em;
+    }
+
+    .brief-box {
+      margin-top: 36px;
+      background: var(--steel);
+      border-left: 3px solid var(--blue-mid);
+      padding: 24px 28px;
+    }
+
+    .brief-box .eyebrow {
+      margin-bottom: 14px;
+    }
+
+    .brief-list {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .brief-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      font-family: var(--serif);
+      font-size: 15px;
+      color: #c0cfde;
+    }
+
+    .brief-list li::before {
+      content: "–";
+      color: var(--sky);
+      flex-shrink: 0;
+    }
+
+    /* Form */
+    .contact-form-wrap {
+      background: var(--steel);
+      border: 1px solid var(--line-2);
+      border-top: 3px solid var(--blue);
+      padding: 40px;
+    }
+
+    .contact-form-wrap .eyebrow {
+      margin-bottom: 20px;
+    }
+
+    .form-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .f-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .f-lbl {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fog);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      background: rgba(8, 15, 22, 0.6);
+      border: 1px solid var(--line-2);
+      color: var(--chrome);
+      font-family: var(--serif);
+      font-size: 15px;
+      padding: 13px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--fog);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--sky);
+    }
+
+    textarea {
+      min-height: 126px;
+      resize: vertical;
+    }
+
+    .form-gap {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid var(--line);
+      padding: 36px 0 52px;
+    }
+
+    .footer-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand strong {
+      font-family: var(--head);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--fog);
+      max-width: 52ch;
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════════ */
+    .sr {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .sr.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    .sr-d1 {
+      transition-delay: 0.1s;
+    }
+
+    .sr-d2 {
+      transition-delay: 0.2s;
+    }
+
+    .sr-d3 {
+      transition-delay: 0.3s;
+    }
+
+    .sr-d4 {
+      transition-delay: 0.4s;
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media(max-width:1100px) {
+
+      .hero-inner,
+      .about-grid,
+      .quality-grid,
+      .contact-grid,
+      .cta-inner,
+      .svc-featured {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-left {
+        padding-right: 0;
+      }
+
+      .hero-right {
+        display: none;
+      }
+
+      .svc-header {
+        grid-template-columns: 1fr;
+      }
+
+      .svc-featured-img {
+        min-height: 240px;
+      }
+
+      .ind-mosaic {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+
+      .ind-card.featured {
+        grid-row: unset;
+      }
+
+      .std-strip {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .cta-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-actions {
+        flex-direction: row;
+      }
+
+      .img-stat {
+        right: 16px;
+      }
+    }
+
+    @media(max-width:760px) {
+      .section {
+        padding: 72px 0;
+      }
+
+      h1 {
+        font-size: clamp(44px, 12vw, 72px);
+      }
+
+      h2 {
+        font-size: clamp(34px, 9vw, 52px);
+      }
+
+      h3 {
+        font-size: clamp(22px, 6vw, 34px);
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      p.lead {
+        font-size: 18px;
+      }
+
+      .hero-body {
+        font-size: 17px;
+      }
+
+      .svc-grid,
+      .faq-grid,
+      .form-2col,
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        border-top: 1px solid var(--line-2);
+        padding-top: 24px;
+      }
+
+      .hstat {
+        padding: 12px 0;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hstat:last-child {
+        border-bottom: none;
+      }
+
+      .nav-certs,
+      .nav-links {
+        display: none;
+      }
+
+      .ind-mosaic {
+        grid-template-columns: 1fr;
+      }
+
+      .pillar {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .svc-card {
+        padding: 28px 24px;
+      }
+
+      .contact-form-wrap {
+        padding: 24px;
+      }
+
+      .about-img-wrap {
+        height: 320px;
+      }
+
+      .img-stat {
+        display: none;
+      }
+
+      .trust-items {
+        flex-wrap: wrap;
+        gap: 0;
+      }
+
+      .ti {
+        flex: 1 1 50%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 11px;
+        padding: 12px 10px;
+      }
+
+      .ti+.ti {
+        border-left: none;
+      }
+
+      /* Mobile nav hamburger space */
+      .nav-wrap {
+        height: 68px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════ HEADER ════════ -->
+  <header id="top-header">
+    <div class="container">
+      <div class="nav-wrap">
+        <a href="#home" class="brand">
+          <img class="brand-logo" src="https://69d8e395edd01a72852849ea.imgix.net/everlasting%20steel%20structures%20logo.png" alt="Everlasting Steel Structures" loading="eager">
+          <div class="brand-text">
+            <strong>Everlasting Steel</strong>
+            <span>Forged in Precision. Built for Permanence.</span>
+          </div>
+        </a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#quality">Quality</a></li>
+            <li><a href="#industries">Industries</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="nav-certs">
+          <div class="cert-pip">AISC</div>
+          <div class="cert-pip">CISC</div>
+          <div class="cert-pip">AS</div>
+          <div class="cert-pip">BS/EN</div>
+          <div class="cert-pip">Tekla&#x2122;</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════ HERO ════════ -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-overlay"></div>
+
+    <div class="container">
+      <div class="hero-inner">
+        <!-- Left -->
+        <div class="hero-left">
+          <div class="eyebrow hero-eyebrow">Structural Steel Detailing &amp; Connection Engineering</div>
+          <h1 class="hero-h1">
+            Forged in<br>
+            <span class="accent">Precision.</span>
+            Built for<br>Permanence.
+          </h1>
+          <p class="hero-body">
+            Everlasting Steel Structures delivers structural steel detailing, connection engineering,
+            Tekla 3D modeling, and estimation support for fabricators and EPC contractors
+            who cannot afford rework or guesswork.
+          </p>
+          <div class="btn-row">
+            <a href="#contact" class="btn btn-primary"><span>Discuss Your Project</span> <span>→</span></a>
+            <a href="#services" class="btn btn-outline">Explore Services</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hstat">
+              <div class="hstat-val">5<sup>-Stage</sup></div>
+              <div class="hstat-lbl">Quality Guarantee</div>
+            </div>
+            <div class="hstat">
+              <div class="hstat-val">24<sup>/7</sup></div>
+              <div class="hstat-lbl">Technical Support</div>
+            </div>
+            <div class="hstat">
+              <div class="hstat-val">6<sup>+</sup></div>
+              <div class="hstat-lbl">Global Standards</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right panels -->
+        <div class="hero-right">
+          <div class="info-panel">
+            <div class="panel-label">Predict. Prevent. Perfect.</div>
+            <div class="spec-table">
+              <div class="spec-row"><span class="sk">Steel Detailing</span><span class="sv">Production-Ready</span></div>
+              <div class="spec-row"><span class="sk">Connection Engineering</span><span class="sv">Code-Compliant</span></div>
+              <div class="spec-row"><span class="sk">Tekla 3D Modeling</span><span class="sv">Clash-Free</span></div>
+              <div class="spec-row"><span class="sk">Estimation &amp; QTO</span><span class="sv">Margin-Protecting</span></div>
+              <div class="spec-row"><span class="sk">QC Discipline</span><span class="sv">Multi-Level — Always</span></div>
+            </div>
+          </div>
+
+          <div class="info-panel" style="border-left-color:var(--blue-mid);">
+            <div class="panel-label">Standards Readiness</div>
+            <div class="cert-grid">
+              <div class="cert-tag hi">AISC</div>
+              <div class="cert-tag hi">CISC</div>
+              <div class="cert-tag hi">AS / NZS</div>
+              <div class="cert-tag hi">BS / EN</div>
+              <div class="cert-tag">Middle East</div>
+              <div class="cert-tag">Indian Std.</div>
+            </div>
+          </div>
+
+          <div class="contact-pip">
+            <span class="phone-num">+91 944 574 3277</span>
+            <span class="phone-sub">info@everlastingsteel.com &nbsp;·&nbsp; www.everlastingsteel.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ TRUST STRIP ════════ -->
+  <div class="trust-strip">
+    <div class="container">
+      <div class="trust-items">
+        <div class="ti">
+          <div class="ti-dot"></div>Multi-Level QC on Every Deliverable
+        </div>
+        <div class="ti">
+          <div class="ti-dot"></div>24/7 Live Technical Support
+        </div>
+        <div class="ti">
+          <div class="ti-dot"></div>Fast Multi-Shift Turnaround
+        </div>
+        <div class="ti">
+          <div class="ti-dot"></div>Tekla-Native Workflow
+        </div>
+        <div class="ti">
+          <div class="ti-dot"></div>Zero-Rework Commitment
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ ABOUT ════════ -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <!-- Image side -->
+        <div class="about-img-wrap sr">
+          <img class="about-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85&auto=format&fit=crop&crop=center" alt="Steel structure construction operations" loading="lazy" />
+          <div class="img-tag">ESS — Engineering Excellence</div>
+          <div class="img-stat">
+            <div class="img-stat-val">5-Stage</div>
+            <div class="img-stat-lbl">Quality Guarantee</div>
+          </div>
+        </div>
+
+        <!-- Copy side -->
+        <div class="about-copy sr sr-d2">
+          <div class="eyebrow">About Everlasting Steel</div>
+          <h2 style="color:var(--white); margin:18px 0 20px;">High-performance detailing &amp; engineering.</h2>
+          <p class="lead">
+            Everlasting Steel Structures is built for projects where "good enough" detailing is not good enough.
+          </p>
+          <p>
+            We combine Tekla Structures expertise, disciplined workflows, and senior engineering oversight to help
+            fabricators and EPC contractors reduce RFIs, prevent site rework, and protect schedule and margin on every job.
+          </p>
+          <blockquote style="margin:28px 0; padding:18px 24px; border-left:3px solid var(--blue); background:rgba(12,63,136,0.12); font-family:var(--serif); font-style:italic; font-size:19px; color:var(--white); font-weight:300;">
+            "We are not here to participate in the industry. We are here to lead it."
+          </blockquote>
+
+          <div class="pillar-list">
+            <div class="pillar">
+              <span class="pillar-label">Vision</span>
+              <p>To become a globally trusted steel engineering partner known for precision, reliability, and long-term value creation.</p>
+            </div>
+            <div class="pillar">
+              <span class="pillar-label">Mission</span>
+              <p>Deliver technically flawless detailing and connection engineering solutions. Reduce project risk through intelligent modeling. Build partnerships based on transparency and accountability.</p>
+            </div>
+            <div class="pillar">
+              <span class="pillar-label">Philosophy</span>
+              <p><strong style="color:var(--sky);">Predict</strong> issues inside the model. <strong style="color:var(--sky);">Prevent</strong> downstream rework. <strong style="color:var(--sky);">Perfect</strong> deliverables before release.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SERVICES ════════ -->
+  <section class="section services-section" id="services">
+    <div class="container">
+      <div class="svc-header sr">
+        <div>
+          <div class="eyebrow" style="margin-bottom:18px;">What We Deliver</div>
+          <h2 style="color:var(--white);">From model to shop floor — zero surprises.</h2>
+        </div>
+        <p style="font-size:17px;">Four core disciplines. One integrated quality system. Every deliverable generated from rigorously checked Tekla models so your shop and site get exactly what they need, the first time.</p>
+      </div>
+
+      <div class="svc-grid">
+        <!-- Card 1 -->
+        <article class="svc-card sr sr-d1">
+          <span class="svc-num-bg">01</span>
+          <span class="svc-num">01 / 04</span>
+          <h3>Steel Detailing</h3>
+          <p>Production-ready fabrication and erection drawings generated from rigorously checked Tekla models — the first time, every time.</p>
+          <ul class="svc-list">
+            <li>Fabrication shop drawings</li>
+            <li>Erection drawings</li>
+            <li>Anchor bolt layouts &amp; embed drawings</li>
+            <li>Advanced bills of material (BOM)</li>
+            <li>Shop and field bolt lists</li>
+            <li>CNC / NC files</li>
+          </ul>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="svc-card sr sr-d2">
+          <span class="svc-num-bg">02</span>
+          <span class="svc-num">02 / 04</span>
+          <h3>Connection Engineering</h3>
+          <p>Code-compliant steel connection design integrated with detailing output — balancing safety, constructability, and fabrication efficiency.</p>
+          <ul class="svc-list">
+            <li>Detailed connection design &amp; calculations</li>
+            <li>AISC · CISC · AS · BS/EN · ME · Indian codes</li>
+            <li>Value-engineered alternatives</li>
+            <li>Optional SE/PE stamping via partners</li>
+          </ul>
+        </article>
+
+        <!-- Featured card with image -->
+        <div class="svc-card svc-featured sr">
+          <div class="svc-featured-img">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80&auto=format&fit=crop" alt="Steel fabrication operations" loading="lazy" />
+          </div>
+          <article class="svc-card" style="background:transparent; padding:44px;">
+            <span class="svc-num-bg">03</span>
+            <span class="svc-num">03 / 04</span>
+            <h3>Tekla 3D Modeling</h3>
+            <p>Intelligent Tekla models — the single source of truth for your steel scope. Issues caught before steel is cut.</p>
+            <ul class="svc-list">
+              <li>Clash detection &amp; resolution before fabrication</li>
+              <li>Better BIM coordination across all trades</li>
+              <li>Consistent model structure to project standards</li>
+              <li>Fewer RFIs. Fewer field changes. Lower rework cost.</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- Card 4 -->
+        <article class="svc-card sr sr-d1">
+          <span class="svc-num-bg">04</span>
+          <span class="svc-num">04 / 04</span>
+          <h3>Estimation &amp; QTO</h3>
+          <p>Accurate material take-offs and bid packages reflecting reality, not assumptions. Built through structured multi-shift delivery.</p>
+          <ul class="svc-list">
+            <li>Accurate material take-offs</li>
+            <li>Competitive bid support</li>
+            <li>Fast multi-shift turnaround</li>
+            <li>QTO packages that protect project margins</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ QUALITY PROCESS ════════ -->
+  <section class="section quality-section" id="quality">
+    <div class="container">
+      <div class="quality-grid">
+        <!-- Left: intro + differentiators -->
+        <div class="quality-intro sr">
+          <div class="eyebrow" style="margin-bottom:20px;">5-Stage Quality Guarantee</div>
+          <h2 style="color:var(--white);">Predict.<br>Prevent.<br>Perfect.</h2>
+          <p style="margin-top:18px;">Every model, drawing, and connection passes through a five-stage quality process before release. This is not an occasional review step — it is a structured system applied to every project, without exception.</p>
+          <p>Every drawing, model, and connection undergoes multi-level QC before release — no exceptions.</p>
+
+          <div class="differentiators" style="margin-top:40px;">
+            <div class="diff">
+              <span class="diff-num">01</span>
+              <div>
+                <strong>Tekla-Native Expertise</strong>
+                <p>Technical depth that many detailing teams simply do not have.</p>
+              </div>
+            </div>
+            <div class="diff">
+              <span class="diff-num">02</span>
+              <div>
+                <strong>Zero-Rework Mindset</strong>
+                <p>Issues resolved before submittal — not left for the field to discover.</p>
+              </div>
+            </div>
+            <div class="diff">
+              <span class="diff-num">03</span>
+              <div>
+                <strong>Multi-Shift Execution</strong>
+                <p>Aggressive turnaround without compromising review quality.</p>
+              </div>
+            </div>
+            <div class="diff">
+              <span class="diff-num">04</span>
+              <div>
+                <strong>Dedicated Accountability</strong>
+                <p>24/7 support with clear project ownership from first model to final issue.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: steps -->
+        <div class="steps sr sr-d2">
+          <div class="step">
+            <div class="step-n">01</div>
+            <div class="step-body">
+              <h4>Model Build</h4>
+              <p>Tekla 3D intelligent model aligned to client standards, project requirements, and structural scope — the foundation every deliverable depends on.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">02</div>
+            <div class="step-body">
+              <h4>Detailer Check</h4>
+              <p>First-level review against drawings, scope, and project coordination requirements before any output leaves the desk.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">03</div>
+            <div class="step-body">
+              <h4>Senior Engineer Review</h4>
+              <p>Model verification, constructability review, and technical sign-off by senior engineering oversight — not a junior pass.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">04</div>
+            <div class="step-body">
+              <h4>RFI Management</h4>
+              <p>Structured coordination, clarification tracking, model updates, and controlled reissues managed as formal engineering process.</p>
+            </div>
+          </div>
+          <div class="step final">
+            <div class="step-n">05</div>
+            <div class="step-body">
+              <h4>Final Release</h4>
+              <p>Deadline-monitored issue of drawings, reports, and NC files after full QC sign-off. No release without sign-off. No exceptions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ INDUSTRIES ════════ -->
+  <section class="section industries-section" id="industries">
+    <div class="container">
+      <div class="ind-header sr">
+        <div class="eyebrow">Industries We Serve</div>
+        <h2 style="color:var(--white);">Engineered for demanding projects.</h2>
+        <p class="lead" style="margin-top:16px; max-width:64ch;">From refineries to hospitals — projects where structural steel errors have real financial, operational, and safety consequences.</p>
+      </div>
+
+      <div class="ind-mosaic sr sr-d1">
+        <!-- Featured: Oil & Gas -->
+        <div class="ind-card featured">
+          <img class="ind-img" src="https://69d8e395edd01a72852849ea.imgix.net/refinery-illuminates-dusk-with-fuel-storage-tanks-generated-by-ai.jpg?w=900&q=85&auto=format&fit=crop&crop=center" alt="Large-scale oil refinery with complex piping" loading="lazy" />
+          <div class="ind-info">
+            <span class="ind-tag">High-Consequence</span>
+            <div class="ind-name">Oil &amp; Gas</div>
+            <p class="ind-desc">Precision-driven deliverables for high-risk, high-consequence environments. Zero tolerance for error at every connection.</p>
+          </div>
+        </div>
+
+        <!-- Commercial & Industrial -->
+        <div class="ind-card">
+          <img class="ind-img" src="https://69d8e395edd01a72852849ea.imgix.net/building-with-modern-design.jpg?w=700&q=85&auto=format&fit=crop&crop=center"
+               alt="Large steel industrial buildings and warehouses" loading="lazy" />
+          <div class="ind-info">
+            <span class="ind-tag">Multi-Sector</span>
+            <div class="ind-name">Commercial &amp; Industrial</div>
+            <p class="ind-desc">Reliable detailing for buildings, plants, warehouses, and integrated facilities across commercial sectors.</p>
+          </div>
+        </div>
+
+        <!-- Power Plants -->
+        <div class="ind-card">
+          <img class="ind-img" src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80&auto=format&fit=crop" alt="Power plant infrastructure" loading="lazy" />
+          <div class="ind-info">
+            <span class="ind-tag">Critical Infrastructure</span>
+            <div class="ind-name">Power Plants</div>
+            <p class="ind-desc">Schedule-sensitive detailing for critical infrastructure delivery.</p>
+          </div>
+        </div>
+
+        <!-- Mining -->
+        <div class="ind-card">
+          <img class="ind-img" src="https://69d8e395edd01a72852849ea.imgix.net/salina-turda-salt-mine-romania.jpg" alt="Open-pit mine and heavy mining machinery" loading="lazy" />
+          <div class="ind-info">
+            <span class="ind-tag">Rugged Applications</span>
+            <div class="ind-name">Mining</div>
+            <p class="ind-desc">Fabrication-ready steel detailing engineered for demanding open-pit and underground mining environments.</p>
+          </div>
+        </div>
+
+        <!-- Public Infrastructure -->
+        <div class="ind-card">
+          <img class="ind-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=700&q=85&auto=format&fit=crop&crop=center" alt="Modern airport terminal public infrastructure" loading="lazy" />
+          <div class="ind-info">
+            <span class="ind-tag">Mission-Critical</span>
+            <div class="ind-name">Public Infrastructure</div>
+            <p class="ind-desc">Airports, hospitals, and institutions — accuracy and multidisciplinary coordination cannot fail where public safety is at stake.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="std-strip sr">
+        <div class="std-strip-label">Standards &amp; Codes</div>
+        <div class="std-chips">
+          <div class="std-chip">AISC</div>
+          <div class="std-chip">CISC</div>
+          <div class="std-chip">AS / NZS</div>
+          <div class="std-chip">BS / EN</div>
+          <div class="std-chip">Middle East</div>
+          <div class="std-chip">Indian Standards</div>
+          <div class="std-chip">Project-Specific EOR</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FAQ ════════ -->
+  <section class="section" style="background:var(--steel-dk); padding:72px 0;">
+    <div class="container">
+      <div class="eyebrow sr" style="margin-bottom:40px;">Frequently Asked by Fabricators &amp; EPCs</div>
+      <div class="faq-grid sr sr-d1">
+        <div class="faq-card">
+          <div class="eyebrow" style="margin-bottom:14px;">Deliverables</div>
+          <h4>What do you provide on a typical project?</h4>
+          <p>Tekla models, fabrication and erection drawings, anchor bolt and embed layouts, BOM and bolt lists, NC files, and connection calculation packages where connection engineering is in scope.</p>
+        </div>
+        <div class="faq-card">
+          <div class="eyebrow" style="margin-bottom:14px;">Standards &amp; Compliance</div>
+          <h4>What design codes do you work to?</h4>
+          <p>We routinely deliver to AISC, CISC, AS, BS/EN, and relevant Middle East and Indian standards, while aligning with project-specific engineer-of-record requirements.</p>
+        </div>
+        <div class="faq-card">
+          <div class="eyebrow" style="margin-bottom:14px;">Coordination</div>
+          <h4>How do you manage RFIs?</h4>
+          <p>RFIs are handled as a formal part of our five-stage quality process — with clear logs, model updates, and controlled reissues designed to minimize downstream disruption and protect schedule.</p>
+        </div>
+        <div class="faq-card">
+          <div class="eyebrow" style="margin-bottom:14px;">The Everlasting Difference</div>
+          <h4>Why choose Everlasting over generic detailing?</h4>
+          <p>Your projects demand precision — not guesswork. Every model, drawing, and connection is treated as mission-critical infrastructure for your schedule, your budget, and your reputation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CTA BAND ════════ -->
+  <section class="cta-section">
+    <div class="cta-bg"></div>
+    <div class="container">
+      <div class="cta-inner sr">
+        <div>
+          <div class="eyebrow" style="margin-bottom:18px;">Your Project Runs on Precision. So Do We.</div>
+          <h2 style="color:var(--white);">Ready to eliminate rework from your next steel project?</h2>
+          <p style="margin-top:16px;">Share your upcoming steel project and discover how a more disciplined detailing and connection engineering partner can protect your time, budget, and reputation.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="#contact" class="btn btn-primary"><span>Discuss Your Project</span> <span>→</span></a>
+          <a href="tel:+919445743277" class="btn btn-outline">Call +91 944 574 3277</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CONTACT ════════ -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Info -->
+        <div class="contact-info sr">
+          <div class="eyebrow">Contact</div>
+          <h2 style="color:var(--white); margin:18px 0 16px;">Let's talk about your next steel project.</h2>
+          <p class="lead">Share your drawings, scope, and schedule — we'll respond with a clear plan for how our detailing, connection engineering, and modeling team can support you.</p>
+
+          <div class="c-list">
+            <div class="c-row">
+              <span class="c-lbl">Phone</span>
+              <span class="c-val">+91 944 574 3277</span>
+            </div>
+            <div class="c-row">
+              <span class="c-lbl">Email</span>
+              <span class="c-val">info@everlastingsteel.com</span>
+            </div>
+            <div class="c-row">
+              <span class="c-lbl">Web</span>
+              <span class="c-val">www.everlastingsteel.com</span>
+            </div>
+            <div class="c-row">
+              <span class="c-lbl">Markets</span>
+              <span class="c-val" style="font-size:14px; font-family:var(--serif); font-weight:400; color:var(--silver);">Middle East · India · Global Project Support</span>
+            </div>
+          </div>
+
+          <div class="brief-box">
+            <div class="eyebrow" style="margin-bottom:14px;">Include in Your Brief</div>
+            <ul class="brief-list">
+              <li>Project type and sector</li>
+              <li>Approximate tonnage (if known)</li>
+              <li>Applicable codes and standards</li>
+              <li>Required deliverables</li>
+              <li>Target dates and milestones</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="contact-form-wrap sr sr-d2">
+          <div class="eyebrow" style="margin-bottom:22px;">Tell Us About Your Project</div>
+          <div class="form-2col">
+            <div class="f-field"><label class="f-lbl">Name</label><input type="text" placeholder="Your name"></div>
+            <div class="f-field"><label class="f-lbl">Company</label><input type="text" placeholder="Company name"></div>
+            <div class="f-field"><label class="f-lbl">Role</label><input type="text" placeholder="Your role"></div>
+            <div class="f-field"><label class="f-lbl">Email</label><input type="email" placeholder="you@company.com"></div>
+            <div class="f-field"><label class="f-lbl">Phone</label><input type="tel" placeholder="+1 000 000 0000"></div>
+            <div class="f-field"><label class="f-lbl">Project Location</label><input type="text" placeholder="Country / Region"></div>
+          </div>
+          <div class="form-gap">
+            <div class="f-field"><label class="f-lbl">Approximate Tonnage / Scope</label><input type="text" placeholder="e.g. 500T structural steel, refinery project"></div>
+            <div class="f-field"><label class="f-lbl">Message</label><textarea placeholder="Describe your project, required deliverables, schedule, and applicable codes…"></textarea></div>
+            <button class="btn btn-primary" type="button" style="width:100%; justify-content:center;"><span>Send Project Details</span> <span>→</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-wrap">
+        <div class="footer-brand">
+          <strong>Everlasting Steel Structures</strong>
+          <p>Precision-driven structural steel detailing and engineering for fabricators and EPC contractors. Forged in precision. Built for permanence.</p>
+        </div>
+        <div class="footer-right">
+          <div class="cert-tag hi">AISC Ready</div>
+          <div class="cert-tag hi">Tekla Native</div>
+          <a href="#home" class="btn btn-outline" style="height:42px; padding:0 20px; font-size:12px;">↑ Top</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+    // Header scroll density
+    const hdr = document.getElementById('top-header');
+    window.addEventListener('scroll', () => {
+      hdr.style.background = scrollY > 80 ?
+        'rgba(188, 208, 226, 0.99)' :
+        'rgba(210, 224, 238, 0.97)';
+    }, {
+      passive: true
+    });
+  </script>
+</body>
+
+</html>
